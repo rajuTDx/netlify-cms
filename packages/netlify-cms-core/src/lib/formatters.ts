@@ -122,7 +122,7 @@ export const slugFormatter = (
   }
 };
 
-const addFileTemplateFields = (entryPath: string, fields: Map<string, string>) => {
+export const addFileTemplateFields = (entryPath: string, fields: Map<string, string>) => {
   if (!entryPath) {
     return fields;
   }
