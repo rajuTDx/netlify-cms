@@ -257,6 +257,7 @@ export default class Widget extends Component {
       isNewEditorComponent,
       t,
       entry,
+      collection,
     } = this.props;
     return React.createElement(controlComponent, {
       field,
@@ -299,6 +300,7 @@ export default class Widget extends Component {
       controlRef,
       t,
       entry,
+      collection,
     });
   }
 }

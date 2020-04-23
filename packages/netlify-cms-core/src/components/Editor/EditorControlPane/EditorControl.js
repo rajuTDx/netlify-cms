@@ -116,6 +116,7 @@ class EditorControl extends React.Component {
     isEditorComponent: PropTypes.bool,
     isNewEditorComponent: PropTypes.bool,
     entry: ImmutablePropTypes.map.isRequired,
+    collection: ImmutablePropTypes.map.isRequired,
   };
 
   state = {
@@ -153,6 +154,7 @@ class EditorControl extends React.Component {
       isNewEditorComponent,
       t,
       entry,
+      collection,
     } = this.props;
 
     const widgetName = field.get('widget');
@@ -253,6 +255,7 @@ class EditorControl extends React.Component {
               isNewEditorComponent={isNewEditorComponent}
               t={t}
               entry={entry}
+              collection={collection}
             />
             {fieldHint && (
               <ControlHint active={isSelected || this.state.styleActive} error={!!errors}>
@@ -267,8 +270,7 @@ class EditorControl extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { collections, entryDraft } = state;
-  const collection = collections.get(entryDraft.getIn(['entry', 'collection']));
+  const { collections } = state;
   const isLoadingAsset = selectIsLoadingAsset(state.medias);
 
   const loadEntry = async (collectionName, slug) => {
@@ -285,7 +287,6 @@ const mapStateToProps = state => {
     mediaPaths: state.mediaLibrary.get('controlMedia'),
     isFetching: state.search.get('isFetching'),
     queryHits: state.search.get('queryHits'),
-    collection,
     isLoadingAsset,
     loadEntry,
   };
@@ -316,7 +317,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
-    boundGetAsset: dispatchProps.boundGetAsset(stateProps.collection, stateProps.entry),
+    boundGetAsset: dispatchProps.boundGetAsset(ownProps.collection, stateProps.entry),
   };
 };
 
